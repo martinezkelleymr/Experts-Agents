@@ -113,6 +113,14 @@ MILLAGE_RATES = {
     "Pembroke Pines": 18.8228,          # Broward County Property Appraiser
     "Miami (city)": 19.9544,            # Miami-Dade Property Appraiser (adopted)
     "Unincorporated Miami-Dade": 16.8983,
+    "Palm Beach (unincorporated, estimate)": 16.2192,  # sum of 2026 PROPOSED county rates (estimate)
+}
+
+# Which tax rate to use for each county in this demo
+MILLAGE_BY_COUNTY = {
+    "Broward": "Pembroke Pines",
+    "Miami-Dade": "Unincorporated Miami-Dade",
+    "Palm Beach": "Palm Beach (unincorporated, estimate)",
 }
 
 # Average landlord insurance (Citizens DP-3, 2026 approved averages). REAL figures.

@@ -34,7 +34,8 @@ You only need Python 3 (free). Open a terminal in the project folder and run:
 | `python3 -m mk_agents.demo` | **Main demo:** the team analyzes a sample house (flip or rental?) |
 | `python3 -m mk_agents.demo --lot` | **Bonus demo:** the team analyzes a vacant lot (what should we build?) |
 | `python3 -m mk_agents.demo --team` | Lists all 15 agents with their role, inputs, outputs and instructions |
-| `python3 -m pytest -v` | Runs the 27 automated tests (needs the free `pytest` package: `pip install pytest`) |
+| `python3 -m mk_agents.chat` | **Chat with the team in the terminal** (type `agents` to list, `talk to 5` to pick one expert) |
+| `python3 -m pytest -v` | Runs the 44 automated tests (needs the free `pytest` package: `pip install pytest`) |
 | `cd site && python3 -m http.server 8000` | Opens the **website** at http://localhost:8000 (publish it free on Netlify: `docs/DEPLOY_NETLIFY.md`) |
 
 ---
@@ -96,6 +97,27 @@ Acquisitions → Land Acquisition → Risk & Compliance → Zoning → Site/Floo
 
 ---
 
+## 4b. Talk to the agents (chat and microphone)
+
+You can have a conversation with **one expert** or with **the whole team**.
+
+- **On the website:** go to *Talk to the team*. Pick "Whole team" or an expert, then type, or press **🎤 Speak** and talk. Tick **Read answers aloud** to hear the replies.
+- **In the terminal:** run `python3 -m mk_agents.chat`.
+
+What you can ask:
+
+| You say | What happens |
+|---|---|
+| "Analyze a house: price 450k, 1,500 sqft, 3 bed, rent 3,100, rehab 60k, ARV 600k" | The real agents run the full workflow on **your** numbers. Each expert answers and the CEO gives the recommendation. |
+| "Analyze a lot: 8,000 sqft lot for 300k in Broward" | The development team compares what to build |
+| "What is the mortgage payment on a 400k loan at 7%?" | The CFO calculates it |
+| "How much is property tax on a 500k house in Miami-Dade?" | Risk & Compliance calculates it with the real 2026 tax rate |
+| "Max offer if ARV is 600k and rehab 60k" | The Investment Analyst calculates the maximum offer |
+| "What are mortgage rates now?" / "Tell me about insurance" / "What is Amendment 3?" | The expert who owns the topic answers from our research, with the source |
+| "Who are you?" (to one expert) | The expert explains its role, inputs, outputs and rules |
+
+**How it works for $0:** the website runs the project's real Python agents inside your browser using **Pyodide**, a free and open-source Python for the web. The microphone and the read-aloud voice use the browser's own free speech features. Voice input works in Chrome, Edge and Safari, but not Firefox. There is no paid AI: the agents answer with their programmed expertise, the calculators and the research. They don't "make up" free-form answers. Numbers you don't give come from the sample data, and the reply tells you what was assumed.
+
 ## 5. Safety rules built into the code
 
 | Rule | How it is enforced | Tested? |
@@ -144,7 +166,10 @@ Simulated items are labeled **"(SIMULATED)"** in `mk_agents/sample_data.py` and 
 | `mk_agents/demo.py` | The demo you run |
 | `tests/test_calculators.py` | Tests for the math (6 tests) |
 | `tests/test_agents.py` | Tests for agents, teamwork and safety rules (16 tests) |
-| `tests/test_site.py` | Tests that the website shows the real agent results (5 tests) |
+| `tests/test_site.py` | Tests that the website shows the real agent results (7 tests) |
+| `mk_agents/chat.py` | The chat engine: talk to one expert or the whole team |
+| `tests/test_chat.py` | Tests for chatting with the agents (15 tests) |
+| `site/chat.js`, `site/vendor/pyodide/` | Website chat with microphone; Pyodide runs the Python agents in the browser (free) |
 | `site/` | The website: `index.html`, `styles.css`, `app.js` and `data/site-data.js` |
 | `scripts/export_site_data.py` | Runs the agents and saves their results for the website |
 
@@ -177,7 +202,7 @@ Each of these can be upgraded later without changing how the team is organized.
    - the maximum offer;
    - the Founder approval, followed by the draft offer that is not sent.
 6. **Safety and ethics (1 slide):** the rules in section 5. AI recommends, people decide, and licensed professionals do licensed work.
-7. **Testing (1 slide):** run `python3 -m pytest -v` and show 27 passed tests.
+7. **Testing (1 slide):** run `python3 -m pytest -v` and show 44 passed tests.
 8. **Limitations and next steps (1 slide):** simulated data and rule-based logic today. Later: real data feeds, an AI model and a web app.
 
 ---

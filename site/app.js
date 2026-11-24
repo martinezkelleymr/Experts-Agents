@@ -128,10 +128,15 @@
       <h4>Instructions it follows</h4>${list(a.instructions, "")}
       <h4>Inputs</h4><div class="chips">${a.inputs.map(i => `<span class="chip">${esc(i)}</span>`).join("")}</div>
       <h4>Outputs</h4><div class="chips">${a.outputs.map(i => `<span class="chip">${esc(i)}</span>`).join("")}</div>
-      <h4>Appears in</h4><div class="chips">${a.demos.map(d => `<span class="chip">${esc(demoNames[d] || d)}</span>`).join("")}</div>`;
+      <h4>Appears in</h4><div class="chips">${a.demos.map(d => `<span class="chip">${esc(demoNames[d] || d)}</span>`).join("")}</div>
+      <p class="dialog-actions"><button class="btn btn-primary" type="button" data-chat="${esc(a.name)}">💬 Chat with ${esc(a.name)}</button></p>`;
     if (typeof dialog.showModal === "function") dialog.showModal(); else dialog.setAttribute("open", "");
   }
-  dialog.addEventListener("click", e => { if (e.target === dialog) dialog.close(); });
+  dialog.addEventListener("click", e => {
+    if (e.target === dialog) { dialog.close(); return; }
+    const chatBtn = e.target.closest("[data-chat]");
+    if (chatBtn && window.MKB_CHAT) { dialog.close(); window.MKB_CHAT.open(chatBtn.dataset.chat); }
+  });
 
   // ---------- live demo ----------
   let scenario = null;

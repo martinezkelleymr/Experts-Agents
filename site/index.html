@@ -22,6 +22,7 @@
         <a href="#how">How it works</a>
         <a href="#experts">Experts</a>
         <a href="#demo">Live demo</a>
+        <a href="#chat">Talk to the team</a>
         <a href="#safety">Safety</a>
         <a href="#about">About</a>
       </nav>
@@ -38,7 +39,7 @@
           <p class="lead">MK.Buildings uses 15 specialist AI agents to evaluate houses and land. Each agent plays a professional role: valuation, finance, zoning, construction or compliance. The CEO Orchestrator coordinates them and the Founder makes every final decision.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#demo">Watch them work on a deal</a>
-            <a class="btn btn-ghost" href="#experts">Meet the experts</a>
+            <a class="btn btn-ghost" href="#chat">Talk to the team</a>
           </div>
         </div>
         <dl class="hero-stats" aria-label="Key facts">
@@ -149,6 +150,38 @@
       </div>
     </section>
 
+    <!-- CHAT -->
+    <section class="section section-alt" id="chat">
+      <div class="container">
+        <h2 class="section-title">Talk to the team</h2>
+        <p class="section-intro">Type or use the microphone. Chat with <strong>the whole team</strong>, where the CEO Orchestrator brings in the right experts, or with <strong>one expert</strong>. Give your own numbers and the real Python agents analyze them in your browser, free.</p>
+
+        <div class="chat-layout">
+          <aside class="panel chat-people" aria-label="Choose who to talk to">
+            <h3>Who do you want to talk to?</h3>
+            <ul class="people-list" id="people-list"></ul>
+          </aside>
+
+          <div class="panel chat-window">
+            <div class="chat-header">
+              <div class="chat-title" id="chat-title"></div>
+              <label class="speak-toggle"><input type="checkbox" id="speak-toggle"> Read answers aloud</label>
+            </div>
+            <p class="engine-status" id="engine-status" role="status"></p>
+            <ol class="messages" id="messages" aria-live="polite" aria-label="Conversation"></ol>
+            <div class="suggestions" id="suggestions" aria-label="Example questions"></div>
+            <form class="chat-input" id="chat-form" autocomplete="off">
+              <label class="visually-hidden" for="chat-text">Your message</label>
+              <input id="chat-text" type="text" placeholder="Ask a question or describe a property…" maxlength="500">
+              <button class="btn btn-ghost mic" type="button" id="btn-mic" aria-pressed="false" title="Speak your question">🎤 <span>Speak</span></button>
+              <button class="btn btn-primary" type="submit" id="btn-send">Send</button>
+            </form>
+            <p class="chat-hint" id="chat-hint">Tip: "Analyze a house: price 450k, 1,500 sqft, 3 bed, rent 3,100, rehab 60k, ARV 600k". Numbers you leave out come from sample data.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- SAFETY -->
     <section class="section section-alt" id="safety">
       <div class="container">
@@ -202,5 +235,7 @@
 
   <script src="data/site-data.js"></script>
   <script src="app.js"></script>
+  <script src="vendor/pyodide/pyodide.js"></script>
+  <script src="chat.js"></script>
 </body>
 </html>

@@ -101,11 +101,16 @@ class MarketResearchAgent(Agent):
         report["numbers"]["months_of_supply"] = stats["months_of_supply"]
         report["sources"].append(stats["source"])
         if deal.kind == "house":
-            rents = [r["monthly_rent"] for r in data.RENTAL_COMPS if r["bedrooms"] == deal.subject["bedrooms"]]
-            rent = round(sum(rents) / len(rents))
+            if deal.subject.get("user_rent"):
+                rent = deal.subject["user_rent"]
+                report["sources"].append("Rent provided by the Founder")
+            else:
+                rents = [r["monthly_rent"] for r in data.RENTAL_COMPS if r["bedrooms"] == deal.subject["bedrooms"]]
+                rents = rents or [r["monthly_rent"] for r in data.RENTAL_COMPS]
+                rent = round(sum(rents) / len(rents))
+                report["sources"].append("Rental comps (SIMULATED)")
             report["numbers"]["estimated_rent"] = rent
             report["numbers"]["hud_fair_market_rent"] = stats["hud_fair_market_rent_3br"]
-            report["sources"].append("Rental comps (SIMULATED)")
             report["summary"] = f"{deal.subject['county']} median {money(stats['median_single_family_price'])}; estimated rent {money(rent)}/month"
         else:
             prices = {p: v["sale_price_per_sqft"] for p, v in data.DEVELOPMENT_PRODUCTS.items()}
@@ -173,6 +178,9 @@ class ValuationAgent(Agent):
 
         as_is, n1 = value_from("dated")
         arv, n2 = value_from("renovated")
+        if deal.subject.get("user_arv"):
+            arv = deal.subject["user_arv"]
+            report["sources"].append("After-repair value provided by the Founder")
         report["numbers"].update({"as_is_value": as_is, "arv": arv, "comps_used": n1 + n2})
         report["sources"].append("Comparable sales (SIMULATED)")
         report["summary"] = f"As-is {money(as_is)}, after repair {money(arv)} (internal estimate, not an appraisal)"
@@ -297,12 +305,19 @@ class RenovationEstimatorAgent(Agent):
                         permit_items.append(item["item"])
         subtotal = sum(line["cost"] for line in lines)
         contingency = round(subtotal * 0.10)
+        if deal.subject.get("user_rehab"):
+            lines = [{"item": "Renovation budget provided by the Founder", "cost": deal.subject["user_rehab"]}]
+            subtotal, contingency = deal.subject["user_rehab"], 0
+            report["sources"].append("Renovation budget provided by the Founder")
         report["numbers"].update({"scope": lines, "subtotal": subtotal, "contingency": contingency,
                                   "total_budget": subtotal + contingency, "permit_items": permit_items})
         report["sources"].append("Renovation cost list (SIMULATED - replace with contractor bids)")
         if permit_items:
             report["licensed_actions"].append("Licensed contractor must pull permits for: " + "; ".join(permit_items))
-        report["summary"] = f"{len(lines)} work items, budget {money(subtotal + contingency)} incl. 10% contingency"
+        if deal.subject.get("user_rehab"):
+            report["summary"] = f"Using the Founder's renovation budget of {money(subtotal)}"
+        else:
+            report["summary"] = f"{len(lines)} work items, budget {money(subtotal + contingency)} incl. 10% contingency"
 
 
 # ===========================================================================
@@ -321,7 +336,7 @@ class LandAcquisitionAgent(Agent):
         lot = deal.subject
         ok = lot["inside_urban_boundary"] and lot["water_and_sewer"]
         report["numbers"].update({"passes_screen": ok, "land_price_per_sqft": round(lot["asking_price"] / lot["lot_sqft"], 2)})
-        report["summary"] = f"{lot['lot_sqft']:,} sq ft lot at {money(lot['asking_price'])} - " + ("passes screening" if ok else "fails screening")
+        report["summary"] = f"{lot['lot_sqft']:,.0f} sq ft lot at {money(lot['asking_price'])} - " + ("passes screening" if ok else "fails screening")
         if not ok:
             report["warnings"].append("Hard constraint: outside urban boundary or no water/sewer")
 
@@ -526,7 +541,7 @@ class RiskComplianceAgent(Agent):
     def work(self, deal, report):
         s = deal.subject
         policy = data.INVESTMENT_POLICY
-        millage = data.MILLAGE_RATES["Pembroke Pines"] if s["county"] == "Broward" else data.MILLAGE_RATES["Unincorporated Miami-Dade"]
+        millage = data.MILLAGE_RATES[data.MILLAGE_BY_COUNTY.get(s["county"], "Pembroke Pines")]
         report["numbers"].update({"millage": millage,
                                   "landlord_insurance": data.INSURANCE_LANDLORD_AVG[s["county"]],
                                   "yearly_property_tax": round(calc.property_tax(s["asking_price"], millage))})

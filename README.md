@@ -6,7 +6,7 @@ It runs **free and locally**: Python only, no paid APIs, no accounts. Sample dat
 
 ## Website
 
-The `site/` folder is a website where visitors can explore the experts and watch them collaborate on three sample deals. It is ready for **free Netlify hosting**. See **[docs/DEPLOY_NETLIFY.md](docs/DEPLOY_NETLIFY.md)** for step-by-step instructions.
+The `site/` folder is a website where visitors can explore the experts, watch them collaborate on three sample deals, and **talk to them by typing or with the microphone**, with one expert or the whole team. It is ready for **free Netlify hosting**. See **[docs/DEPLOY_NETLIFY.md](docs/DEPLOY_NETLIFY.md)** for step-by-step instructions.
 
 ```bash
 cd site && python3 -m http.server 8000   # preview at http://localhost:8000
@@ -18,6 +18,7 @@ cd site && python3 -m http.server 8000   # preview at http://localhost:8000
 python3 -m mk_agents.demo                 # the team analyzes a sample house
 python3 -m mk_agents.demo --lot           # the team analyzes a vacant lot
 python3 -m mk_agents.demo --team          # list the 15 agents
+python3 -m mk_agents.chat                 # chat with the team in the terminal
 python3 scripts/export_site_data.py       # refresh the website data from the agents
 python3 -m pytest -v                      # run the tests (pip install pytest)
 ```

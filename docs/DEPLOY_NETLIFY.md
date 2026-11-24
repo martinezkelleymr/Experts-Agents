@@ -4,6 +4,8 @@ The website is in the `site/` folder. It is a **static site** (HTML, CSS and Jav
 
 The agent results shown on the site were produced by the real Python agents (`mk_agents/`) and saved in `site/data/site-data.js` by `scripts/export_site_data.py`.
 
+The **Talk to the team** chat runs those same Python agents directly in the visitor's browser with **Pyodide** (free, open source, bundled in `site/vendor/pyodide/`, about 14 MB). The microphone uses the browser's free speech recognition. Netlify serves the site over HTTPS, which browsers require before they allow the microphone.
+
 ---
 
 ## Option A — Connect your GitHub repository (recommended)
@@ -41,7 +43,7 @@ cd site
 python3 -m http.server 8000
 ```
 
-Then open http://localhost:8000. You can also double-click `site/index.html`, since the site works without a server.
+Then open http://localhost:8000. Use the local server (not a double-click on `index.html`) so the chat can load the Python agents. The microphone works on `localhost` and on Netlify (HTTPS).
 
 ## After changing the agents or sample data
 
@@ -63,6 +65,9 @@ With Option A, Netlify redeploys automatically after the push.
 | The page loads but the experts or demo are empty | `site/data/site-data.js` is missing. Run `python3 scripts/export_site_data.py`, then commit and push. |
 | Netlify asks for a build command | Leave it empty. Nothing needs to be built. |
 | The test `test_site_data_is_up_to_date_with_the_agents` fails | Run `python3 scripts/export_site_data.py` to refresh the data. |
+| Chat says "the team could not start" | Reload the page. Check that `site/vendor/pyodide/` and `site/py/` were deployed. |
+| The 🎤 button is greyed out | That browser has no free speech recognition. Use Chrome, Edge or Safari, or type instead. |
+| The microphone doesn't listen | Allow microphone access when the browser asks (padlock icon in the address bar). |
 
 ## Cost
 

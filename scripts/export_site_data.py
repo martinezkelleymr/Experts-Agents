@@ -19,9 +19,13 @@ sys.path.insert(0, str(ROOT))
 
 from mk_agents import sample_data as data  # noqa: E402
 from mk_agents.agents import ALL_AGENTS  # noqa: E402
+from mk_agents.chat import SUGGESTIONS  # noqa: E402
 from mk_agents.orchestrator import WORKFLOWS, CEOOrchestrator  # noqa: E402
 
 OUTPUT = ROOT / "site" / "data" / "site-data.js"
+PY_OUT = ROOT / "site" / "py" / "mk_agents"
+# Python files the website loads into the browser (Pyodide) for the chat
+PYTHON_FILES = ["__init__.py", "agents.py", "calculators.py", "orchestrator.py", "sample_data.py", "chat.py"]
 
 SCENARIOS = [
     {
@@ -103,6 +107,8 @@ def build():
         "agents": agents,
         "scenarios": [run_scenario(s) for s in SCENARIOS],
         "policy": data.INVESTMENT_POLICY,
+        "python_files": PYTHON_FILES,
+        "chat_suggestions": SUGGESTIONS,
     }
 
 
@@ -116,6 +122,10 @@ def main():
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(render(build()), encoding="utf-8")
     print(f"Wrote {OUTPUT.relative_to(ROOT)}")
+    PY_OUT.mkdir(parents=True, exist_ok=True)
+    for name in PYTHON_FILES:
+        (PY_OUT / name).write_text((ROOT / "mk_agents" / name).read_text(encoding="utf-8"), encoding="utf-8")
+    print(f"Copied {len(PYTHON_FILES)} agent files to {PY_OUT.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

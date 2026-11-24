@@ -454,6 +454,14 @@ window.MKB_DATA = {
       "role": "Plans the exit: sale price and timing for flips, or hold plan for rentals."
     }
   ],
+  "chat_suggestions": [
+    "Analyze a house: price 450k, 1,500 sqft, 3 bed, rent 3,100, rehab 60k, ARV 600k",
+    "Analyze a lot: 8,000 sqft lot for 300k in Broward",
+    "What is the mortgage payment on a 400k loan at 7%?",
+    "How much is property tax on a 500k house in Miami-Dade?",
+    "What are mortgage rates now?",
+    "Run the sample house demo"
+  ],
   "company": "MK.Buildings",
   "policy": {
     "counties": [
@@ -471,6 +479,14 @@ window.MKB_DATA = {
     ],
     "selling_cost_rate": 0.07
   },
+  "python_files": [
+    "__init__.py",
+    "agents.py",
+    "calculators.py",
+    "orchestrator.py",
+    "sample_data.py",
+    "chat.py"
+  ],
   "scenarios": [
     {
       "activity_log": [
