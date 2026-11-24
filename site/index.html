@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MK.Buildings AI Experts</title>
+  <meta name="description" content="Meet the 15 AI experts and the CEO Orchestrator of MK.Buildings, a South Florida real estate investment and development company, and watch them collaborate on a deal.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="MK.Buildings home">
+        <span class="brand-mark" aria-hidden="true">MK</span>
+        <span class="brand-text">MK.Buildings <span class="brand-sub">AI Experts</span></span>
+      </a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
+      <nav id="site-nav" class="site-nav" aria-label="Main">
+        <a href="#how">How it works</a>
+        <a href="#experts">Experts</a>
+        <a href="#demo">Live demo</a>
+        <a href="#safety">Safety</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">South Florida real estate · Investment &amp; Development</p>
+          <h1>An AI team of real estate experts, led by a CEO Orchestrator</h1>
+          <p class="lead">MK.Buildings uses 15 specialist AI agents to evaluate houses and land. Each agent plays a professional role: valuation, finance, zoning, construction or compliance. The CEO Orchestrator coordinates them and the Founder makes every final decision.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#demo">Watch them work on a deal</a>
+            <a class="btn btn-ghost" href="#experts">Meet the experts</a>
+          </div>
+        </div>
+        <dl class="hero-stats" aria-label="Key facts">
+          <div><dt>AI experts</dt><dd>15</dd></div>
+          <div><dt>Orchestrator</dt><dd>1</dd></div>
+          <div><dt>Demo deals</dt><dd>3</dd></div>
+          <div><dt>Cost to run</dt><dd>$0</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="section" id="how">
+      <div class="container">
+        <h2 class="section-title">How it works</h2>
+        <p class="section-intro">One shared process, not 15 separate chatbots.</p>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">1</span>
+            <h3>The Founder asks</h3>
+            <p>"Should we flip this house or rent it?" or "What should we build on this lot?"</p>
+          </li>
+          <li class="step">
+            <span class="step-num">2</span>
+            <h3>The CEO Orchestrator plans</h3>
+            <p>It chooses the right team of experts and the order they work in.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">3</span>
+            <h3>The experts collaborate</h3>
+            <p>Each writes its report in a shared <strong>Deal File</strong> and reads the others' reports to build on their work.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">4</span>
+            <h3>The Founder decides</h3>
+            <p>The Orchestrator delivers one Decision Memo. Nothing moves forward without the Founder's approval.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- EXPERTS -->
+    <section class="section section-alt" id="experts">
+      <div class="container">
+        <h2 class="section-title">Meet the experts</h2>
+        <p class="section-intro">Select any expert to see their responsibilities, instructions, inputs and outputs.</p>
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter by division" id="division-filters"></div>
+          <label class="search">
+            <span class="visually-hidden">Search experts</span>
+            <input type="search" id="expert-search" placeholder="Search experts…">
+          </label>
+        </div>
+        <div class="expert-grid" id="expert-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- LIVE DEMO -->
+    <section class="section" id="demo">
+      <div class="container">
+        <h2 class="section-title">Live collaboration demo</h2>
+        <p class="section-intro">Pick a deal and press <strong>Play</strong> to watch the experts work it step by step. These results were produced by the project's Python agents using sample data.</p>
+
+        <div class="scenario-picker" role="tablist" aria-label="Choose a deal" id="scenario-picker"></div>
+
+        <div class="demo-layout">
+          <aside class="panel property-panel" aria-labelledby="property-title">
+            <h3 id="property-title">The deal</h3>
+            <p class="request" id="demo-request"></p>
+            <dl class="property-facts" id="property-facts"></dl>
+            <h4>Team for this deal</h4>
+            <ol class="team-list" id="team-list"></ol>
+          </aside>
+
+          <div class="panel feed-panel">
+            <div class="demo-controls">
+              <button class="btn btn-primary" id="btn-play">▶ Play</button>
+              <button class="btn btn-ghost" id="btn-step">Next step</button>
+              <button class="btn btn-ghost" id="btn-all">Show all</button>
+              <button class="btn btn-ghost" id="btn-reset">Reset</button>
+              <span class="progress" id="demo-progress" aria-live="polite"></span>
+            </div>
+            <ol class="feed" id="activity-feed" aria-live="polite" aria-label="Activity log"></ol>
+          </div>
+        </div>
+
+        <div class="reports" id="reports-section" hidden>
+          <h3>Expert reports</h3>
+          <div class="report-grid" id="report-grid"></div>
+        </div>
+
+        <div class="memo-wrap" id="memo-section" hidden>
+          <div class="memo-header">
+            <h3>Decision Memo for the Founder</h3>
+            <span class="badge" id="memo-badge"></span>
+          </div>
+          <div class="recommendation" id="memo-recommendation"></div>
+          <pre class="memo" id="memo-text" tabindex="0"></pre>
+          <div class="decision">
+            <p><strong>You are the Founder.</strong> What is your decision?</p>
+            <div class="decision-actions">
+              <button class="btn btn-primary" id="btn-approve">Approve</button>
+              <button class="btn btn-danger" id="btn-reject">Reject</button>
+            </div>
+            <div class="decision-result" id="decision-result" aria-live="polite"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SAFETY -->
+    <section class="section section-alt" id="safety">
+      <div class="container">
+        <h2 class="section-title">Built-in safety rules</h2>
+        <p class="section-intro">The agents recommend. People decide. Licensed professionals do licensed work.</p>
+        <div class="card-grid">
+          <article class="info-card"><h3>Only the Founder approves</h3><p>No agent can approve, sign, pay or send anything. Approval is enforced in code.</p></article>
+          <article class="info-card"><h3>Compliance can stop a deal</h3><p>The Risk &amp; Compliance Officer blocks deals that break company rules. Try the condo demo.</p></article>
+          <article class="info-card"><h3>Drafts, never sent</h3><p>After approval, offers and letters of intent are drafts for an attorney or broker to review.</p></article>
+          <article class="info-card"><h3>Numbers from tested formulas</h3><p>All math runs through tested calculators, and the CFO agent double-checks the profit.</p></article>
+          <article class="info-card"><h3>Hidden instructions are ignored</h3><p>Text such as "ignore your instructions" inside a document is flagged as a security issue, not followed.</p></article>
+          <article class="info-card"><h3>Licensed work stays human</h3><p>Appraisals, inspections, engineering, construction and legal work are listed for Florida-licensed professionals.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section" id="about">
+      <div class="container about">
+        <div>
+          <h2 class="section-title">About this project</h2>
+          <p>MK.Buildings is a planned South Florida residential investment and development company. The research behind it covers Miami-Dade, Broward and Palm Beach market data, Florida regulations, financing and the professional roles a real estate firm needs. That research shaped these 15 AI experts.</p>
+          <p>The agents are written in Python. To keep this site free on Netlify, the Python agents are run ahead of time on sample deals and their real outputs are saved for this page. No paid AI service or API is used.</p>
+        </div>
+        <div class="panel tech">
+          <h3>How it was built</h3>
+          <ul>
+            <li><strong>Agents:</strong> 15 Python classes plus a CEO Orchestrator</li>
+            <li><strong>Collaboration:</strong> a shared Deal File and workflows</li>
+            <li><strong>Tests:</strong> automated tests for math, teamwork and safety</li>
+            <li><strong>Website:</strong> HTML, CSS and JavaScript, hosted on Netlify</li>
+            <li><strong>Data:</strong> real research figures plus clearly labeled simulated properties</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p><strong>MK.Buildings AI Experts</strong> · Educational project.</p>
+      <p class="disclaimer">Demonstration only, not investment, legal, appraisal or engineering advice. Properties marked SIMULATED are fictional. Valuations are internal estimates, not appraisals.</p>
+    </div>
+  </footer>
+
+  <!-- Expert details dialog -->
+  <dialog class="expert-dialog" id="expert-dialog" aria-labelledby="dialog-title">
+    <div class="dialog-body" id="dialog-body"></div>
+    <form method="dialog"><button class="btn btn-ghost dialog-close" aria-label="Close">Close</button></form>
+  </dialog>
+
+  <script src="data/site-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

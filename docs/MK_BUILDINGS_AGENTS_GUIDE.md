@@ -34,7 +34,8 @@ You only need Python 3 (free). Open a terminal in the project folder and run:
 | `python3 -m mk_agents.demo` | **Main demo:** the team analyzes a sample house (flip or rental?) |
 | `python3 -m mk_agents.demo --lot` | **Bonus demo:** the team analyzes a vacant lot (what should we build?) |
 | `python3 -m mk_agents.demo --team` | Lists all 15 agents with their role, inputs, outputs and instructions |
-| `python3 -m pytest -v` | Runs the 22 automated tests (needs the free `pytest` package: `pip install pytest`) |
+| `python3 -m pytest -v` | Runs the 27 automated tests (needs the free `pytest` package: `pip install pytest`) |
+| `cd site && python3 -m http.server 8000` | Opens the **website** at http://localhost:8000 (publish it free on Netlify: `docs/DEPLOY_NETLIFY.md`) |
 
 ---
 
@@ -143,6 +144,9 @@ Simulated items are labeled **"(SIMULATED)"** in `mk_agents/sample_data.py` and 
 | `mk_agents/demo.py` | The demo you run |
 | `tests/test_calculators.py` | Tests for the math (6 tests) |
 | `tests/test_agents.py` | Tests for agents, teamwork and safety rules (16 tests) |
+| `tests/test_site.py` | Tests that the website shows the real agent results (5 tests) |
+| `site/` | The website: `index.html`, `styles.css`, `app.js` and `data/site-data.js` |
+| `scripts/export_site_data.py` | Runs the agents and saves their results for the website |
 
 ---
 
@@ -155,7 +159,7 @@ The blueprint (`docs/MK_BUILDINGS_AI_WORKFORCE_ARCHITECTURE.md`) describes the f
 | Claude AI model as each agent's "brain" (paid API) | Free Python rules + calculators (no AI service needed) |
 | PostgreSQL database | A Python object in memory (the Deal File) |
 | Live data feeds (FEMA, county GIS, HUD API…) | Sample data file |
-| Web app | Terminal demo |
+| Web app with live AI | Static website + terminal demo (agent results generated ahead of time) |
 
 Each of these can be upgraded later without changing how the team is organized.
 
@@ -167,13 +171,13 @@ Each of these can be upgraded later without changing how the team is organized.
 2. **Idea (1 slide):** 15 AI "specialist employees" plus a CEO Orchestrator, with the Founder as the final decision-maker.
 3. **The team (1 slide):** the table in section 3, grouped by division.
 4. **How they collaborate (1 slide):** the shared Deal File and the house workflow in section 4.
-5. **Live demo (2–3 minutes):** run `python3 -m mk_agents.demo` and point at:
+5. **Live demo (2–3 minutes):** open the Netlify website (or run `python3 -m mk_agents.demo`) and point at:
    - the activity log, where agents read each other's reports;
    - the Decision Memo;
    - the maximum offer;
    - the Founder approval, followed by the draft offer that is not sent.
 6. **Safety and ethics (1 slide):** the rules in section 5. AI recommends, people decide, and licensed professionals do licensed work.
-7. **Testing (1 slide):** run `python3 -m pytest -v` and show 22 passed tests.
+7. **Testing (1 slide):** run `python3 -m pytest -v` and show 27 passed tests.
 8. **Limitations and next steps (1 slide):** simulated data and rule-based logic today. Later: real data feeds, an AI model and a web app.
 
 ---

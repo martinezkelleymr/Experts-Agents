@@ -1,0 +1,15 @@
+# Netlify configuration (free plan).
+# The website is static: no build step and no server are needed.
+# The agent results in site/data/site-data.js are generated from the Python agents
+# with:  python3 scripts/export_site_data.py   (run locally, then commit).
+[build]
+  publish = "site"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
